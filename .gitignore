@@ -1,4 +1,5 @@
 node_modules/**/*
+fitness/*
 .expo/*
 npm-debug.*
 *.jks

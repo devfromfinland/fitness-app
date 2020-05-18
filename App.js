@@ -9,12 +9,14 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import AddEntry from './components/AddEntry'
 import History from './components/History'
+import Live from './components/Live'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
-import { Constants } from 'expo-constants'
+// import { Constants } from 'expo-constants'
+import { Constants } from 'react-native-unimodules'
 
 function MyStatusBar ({ backgroundColor, ...props }) {
   return (
-    <View style={{backgroundColor, height: 20}}>
+    <View style={{backgroundColor, height: Constants.statusBarHeight}}>
       <StatusBar translucent backgroundColor={backgroundColor} {...props} />
     </View>
   )
@@ -49,10 +51,15 @@ export default function App() {
           <Tab.Navigator
             screenOptions={({ route }) => ({
               tabBarIcon: ({ color }) => {
-                if (route.name === 'History') {
-                  return <Ionicons name='ios-bookmarks' size={30} color={color} />
-                } else if (route.name === 'Add Entry') {
-                  return <FontAwesome name='plus-square' size={30} color={color} />
+                switch (route.name) {
+                  case 'History':
+                    return <Ionicons name='ios-bookmarks' size={30} color={color} />
+                  case 'Add Entry':
+                    return <FontAwesome name='plus-square' size={30} color={color} />
+                  case 'Live':
+                    return <Ionicons name='ios-move' size={30} color={color} />
+                  default:
+                    // do nothing
                 }
               },
             })}
@@ -60,6 +67,7 @@ export default function App() {
           >
             <Tab.Screen name='History' component={History} />
             <Tab.Screen name='Add Entry' component={AddEntry} />
+            <Tab.Screen name='Live' component={Live} />
           </Tab.Navigator>
         </NavigationContainer>
       </View>
